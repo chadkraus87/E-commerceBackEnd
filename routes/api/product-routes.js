@@ -7,7 +7,10 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const products = await Product.findAll({
-      include: [{ model: Category }, { model: Tag }],
+      include: [
+        { model: Category},
+        { model: Tag, through: ProductTag },
+      ],
     });
     res.status(200).json(products);
   } catch (err) {
@@ -19,7 +22,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findByPk(req.params.id, {
-      include: [{ model: Category }, { model: Tag }],
+      include: [
+        { model: Category, attributes: ['id', 'category_name'] },
+        { model: Tag, attributes: ['id', 'tag_name'] },
+      ],
     });
 
     if (!product) {
@@ -49,10 +55,8 @@ router.post('/', async (req, res) => {
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
-            product_name: req.body.product_name,
-            price: req.body.price,
-            stock: req.body.stock,
-            tagIds: req.body.tagIds
+            product_id: product.id,
+                tag_id,
           };
         });
         return ProductTag.bulkCreate(productTagIdArr);
