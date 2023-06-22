@@ -11,8 +11,6 @@ The E-commerce Back-End is a backend application that provides the necessary API
 
 ![Terminal Demo](./lib/Insomnia-Screenshot.png)
 
-https://github.com/chadkraus87/E-commerceBackEnd/assets/127354484/b2560f40-0507-4d61-a003-ef48bf6af60f
-
 ## Table of Contents
 
 - [Installation](#installation)
